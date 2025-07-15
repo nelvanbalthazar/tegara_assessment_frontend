@@ -1,0 +1,27 @@
+.job-page {
+  padding: 1rem;
+}
+
+.error {
+  color: red;
+  margin-top: 1rem;
+}
+
+.job-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  margin-top: 2rem;
+}
+
+.job-card {
+  background-color: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: background 0.2s ease;
+}
+
+.job-card:hover {
+  background-color: #f1f5f9;
+}

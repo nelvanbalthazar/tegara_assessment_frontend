@@ -1,0 +1,40 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e3a8a;
+  color: white;
+  padding: 0.75rem 1rem;
+  flex-wrap: wrap;
+}
+
+.navbar-left a,
+.navbar-right button {
+  margin-right: 1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar-logo {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-right: 2rem;
+}
+
+.navbar-user {
+  margin-right: 1rem;
+}
+
+.navbar-logout {
+  background: #dc2626;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.navbar-logout:hover {
+  background: #b91c1c;
+}

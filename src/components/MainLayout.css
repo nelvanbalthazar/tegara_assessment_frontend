@@ -1,0 +1,11 @@
+.main-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar + main content positioning */
+.main-layout-content {
+  margin-left: 220px; /* same width as sidebar */
+  padding: 2rem;
+  margin-top: 60px;   /* height of navbar */
+}
