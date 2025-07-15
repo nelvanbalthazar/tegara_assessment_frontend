@@ -1,8 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAppSelector } from '../store/hooks';
+import { selectUser } from '../store/slices/authSlice';
 import './Sidebar.css';
 
 const Sidebar: React.FC = () => {
+  const user = useAppSelector(selectUser);
+
   return (
     <aside className="sidebar">
       <h2 className="sidebar-title">CV Portal</h2>
@@ -19,6 +23,12 @@ const Sidebar: React.FC = () => {
         <NavLink to="/upload" className="sidebar-link">
           📤 Upload CV
         </NavLink>
+
+        {user?.role === 'admin' && (
+          <NavLink to="/users/create" className="sidebar-link">
+            ➕ Create User
+          </NavLink>
+        )}
       </nav>
     </aside>
   );
