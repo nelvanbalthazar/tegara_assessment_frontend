@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../index'; // Adjust path if needed
 import api from '../../api';
 
 interface User {
+  id: string;
+  name: string;
   email: string;
   role: string;
 }
@@ -105,13 +106,13 @@ const authSlice = createSlice({
   },
 });
 
-// ✅ Actions
+// Actions
 export const { logout } = authSlice.actions;
 
-// ✅ Reducer
+// Reducer
 export default authSlice.reducer;
 
-// ✅ Selectors
+// Selectors
 export const selectAuthToken = (state: RootState) => state.auth.token;
 export const selectAuthLoading = (state: RootState) => state.auth.loading;
 export const selectAuthError = (state: RootState) => state.auth.error;

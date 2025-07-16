@@ -3,17 +3,18 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../index';
 import api from '../../api';
 
-// CV type
+// --- CV type ---
 export interface CV {
   id: string;
   fileName: string;
   candidateId: string;
   uploadedAt: string;
-  originalFileUrl: string;
+  originalFileUrl?: string; // optional if you want to support download
+  extractedText?: string;
   status?: 'processing' | 'completed' | 'error';
 }
 
-// Slice state
+// --- Slice state ---
 interface CVState {
   cvs: CV[];
   loading: boolean;
@@ -26,7 +27,7 @@ const initialState: CVState = {
   error: null,
 };
 
-// Fetch uploaded CVs
+// --- Fetch uploaded CVs ---
 export const fetchCVs = createAsyncThunk<CV[]>(
   'cv/fetchAll',
   async (_, { rejectWithValue }) => {
@@ -39,7 +40,7 @@ export const fetchCVs = createAsyncThunk<CV[]>(
   }
 );
 
-// Upload a new CV
+// --- Upload a new CV ---
 export const uploadCV = createAsyncThunk<CV, FormData>(
   'cv/upload',
   async (formData, { rejectWithValue }) => {
@@ -56,7 +57,7 @@ export const uploadCV = createAsyncThunk<CV, FormData>(
   }
 );
 
-// Delete a CV
+// --- Delete a CV ---
 export const deleteCV = createAsyncThunk<string, string>(
   'cv/delete',
   async (id, { rejectWithValue }) => {
@@ -69,7 +70,7 @@ export const deleteCV = createAsyncThunk<string, string>(
   }
 );
 
-// Slice
+// --- Slice ---
 const cvSlice = createSlice({
   name: 'cv',
   initialState,
@@ -84,25 +85,42 @@ const cvSlice = createSlice({
         state.loading = false;
         state.cvs = action.payload;
       })
-      .addCase(fetchCVs.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(fetchCVs.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
+        state.error = action.payload as string;
       })
 
+      .addCase(uploadCV.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(uploadCV.fulfilled, (state, action: PayloadAction<CV>) => {
+        state.loading = false;
         state.cvs.push(action.payload);
       })
+      .addCase(uploadCV.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
 
+      .addCase(deleteCV.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(deleteCV.fulfilled, (state, action: PayloadAction<string>) => {
+        state.loading = false;
         state.cvs = state.cvs.filter(cv => cv.id !== action.payload);
+      })
+      .addCase(deleteCV.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });
 
-// ✅ Selector
+// --- Selectors ---
 export const selectCVs = (state: RootState) => state.cv.cvs;
 export const selectCVsLoading = (state: RootState) => state.cv.loading;
 export const selectCVsError = (state: RootState) => state.cv.error;
-
 
 export default cvSlice.reducer;
