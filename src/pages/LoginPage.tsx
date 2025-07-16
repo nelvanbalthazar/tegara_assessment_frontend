@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import {
   login,
@@ -12,21 +12,17 @@ import './LoginPage.css';
 
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
+  const loading = useAppSelector(selectAuthLoading);
   const token = useAppSelector(selectAuthToken);
   const error = useAppSelector(selectAuthError);
-  const loading = useAppSelector(selectAuthLoading);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // Redirect to dashboard if already logged in
-  useEffect(() => {
-    if (token) {
-      navigate('/dashboard');
-    }
-  }, [token, navigate]);
+  
+  if (token) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

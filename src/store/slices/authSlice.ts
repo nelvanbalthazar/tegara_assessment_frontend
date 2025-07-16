@@ -30,7 +30,7 @@ export const login = createAsyncThunk<
   { rejectValue: string }
 >('auth/login', async (credentials, { rejectWithValue }) => {
   try {
-    const response = await api.post<{ token: string; user?: User }>('/auth/login', credentials);
+    const response = await api.post<{ token: string; user?: User }>('/api/auth/login', credentials);
     const { token, user } = response.data;
     if (typeof token === 'string') {
       localStorage.setItem('token', token);
@@ -50,7 +50,7 @@ export const createUser = createAsyncThunk<
   { rejectValue: string }
 >('auth/createUser', async (userData, { rejectWithValue }) => {
   try {
-    const response = await api.post<{ message: string }>('/auth/register', userData);
+    const response = await api.post<{ message: string }>('/api/auth/register', userData);
     return response.data;
   } catch (err: any) {
     return rejectWithValue(
@@ -79,6 +79,7 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token); 
         state.user = action.payload.user ?? null;
         state.error = null;
       })

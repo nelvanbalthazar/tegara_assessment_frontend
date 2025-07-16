@@ -8,23 +8,31 @@ import JobPage from './pages/JobPage';
 import CreateUserPage from './pages/CreateUserPage';
 import './styles/App.css';
 
+import { useAppSelector } from './store/hooks';
+import { selectAuthToken } from './store/slices/authSlice';
+
 const App: React.FC = () => {
-  const isAuthenticated = !!localStorage.getItem('token');
+  const token = useAppSelector(selectAuthToken);
+  const isAuthenticated = !!token;
 
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/login"
+        element={
+          isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
+        }
+      />
 
       {isAuthenticated ? (
         <>
-          <Route path="/" element={<Navigate to="/dashboard" />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/candidates" element={<CandidatePage />} />
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/jobs" element={<JobPage />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
           <Route path="/users/create" element={<CreateUserPage />} />
-
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </>
       ) : (
         <Route path="*" element={<Navigate to="/login" replace />} />
