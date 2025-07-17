@@ -4,6 +4,7 @@ import candidateReducer from './slices/candidateSlice';
 import cvReducer from './slices/cvSlice';
 import jobReducer from './slices/jobSlice';
 import userReducer from './slices/userSlice';
+import matchReducer from './slices/matchSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     cv: cvReducer,
     jobs: jobReducer,
     users: userReducer,
+    match: matchReducer
   },
 });
 

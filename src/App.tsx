@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
-import Dashboard from './pages/Dashboard';
+import DashboardPage from './pages/DashboardPage';
 import CandidatePage from './pages/CandidatePage';
 import UploadPage from './pages/UploadPage';
 import JobPage from './pages/JobPage';
@@ -30,7 +30,7 @@ const App: React.FC = () => {
       {isAuthenticated ? (
         <>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/candidates" element={<CandidatePage />} />
           <Route path="/candidates/create" element={<CreateCandidatePage />} />
           <Route path="/upload" element={<UploadPage />} />
