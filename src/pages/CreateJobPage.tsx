@@ -15,8 +15,7 @@ const CreateJobPage: React.FC = () => {
   const [company, setCompany] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
-  const [experienceLevel, setExperienceLevel] = useState('');
-  const [skillsRequired, setSkillsRequired] = useState('');
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

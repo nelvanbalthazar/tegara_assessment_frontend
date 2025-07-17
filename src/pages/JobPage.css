@@ -45,7 +45,6 @@
 
 .job-actions button:hover {
   background-color: #cbd5e1;
-  color:#000000;
 }
 
 .job-actions button:last-child {
@@ -54,5 +53,5 @@
 
 .job-actions button:last-child:hover {
   background-color: #fca5a5;
-  color:#000000;
+  color:#000000
 }
