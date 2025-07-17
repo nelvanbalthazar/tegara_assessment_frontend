@@ -6,6 +6,7 @@ import CandidatePage from './pages/CandidatePage';
 import UploadPage from './pages/UploadPage';
 import JobPage from './pages/JobPage';
 import CreateUserPage from './pages/CreateUserPage';
+import UserListPage from './pages/UserListPage';
 import './styles/App.css';
 
 import { useAppSelector } from './store/hooks';
@@ -32,6 +33,7 @@ const App: React.FC = () => {
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/jobs" element={<JobPage />} />
           <Route path="/users/create" element={<CreateUserPage />} />
+          <Route path="/users" element={<UserListPage />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </>
       ) : (

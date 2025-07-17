@@ -50,7 +50,12 @@ export const createUser = createAsyncThunk<
   { rejectValue: string }
 >('auth/createUser', async (userData, { rejectWithValue }) => {
   try {
-    const response = await api.post<{ message: string }>('/api/auth/register', userData);
+    const token = localStorage.getItem('token');
+    const response = await api.post<{ message: string }>('/api/auth/register', userData,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     return response.data;
   } catch (err: any) {
     return rejectWithValue(

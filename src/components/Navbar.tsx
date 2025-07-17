@@ -17,12 +17,6 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <Link to="/dashboard" className="navbar-logo">
-          CV Portal
-        </Link>
-        <Link to="/candidates">Candidates</Link>
-        <Link to="/jobs">Jobs</Link>
-        <Link to="/upload">Upload</Link>
       </div>
 
       <div className="navbar-right">

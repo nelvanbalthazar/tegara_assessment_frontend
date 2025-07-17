@@ -3,6 +3,7 @@ import authReducer from './slices/authSlice';
 import candidateReducer from './slices/candidateSlice';
 import cvReducer from './slices/cvSlice';
 import jobReducer from './slices/jobSlice';
+import userReducer from './slices/userSlice';
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     candidates: candidateReducer,
     cv: cvReducer,
     jobs: jobReducer,
+    users: userReducer,
   },
 });
 

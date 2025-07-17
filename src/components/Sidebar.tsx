@@ -14,22 +14,39 @@ const Sidebar: React.FC = () => {
         <NavLink to="/dashboard" className="sidebar-link">
           📊 Dashboard
         </NavLink>
-        <NavLink to="/candidates" className="sidebar-link">
-          👥 Candidates
-        </NavLink>
-        <NavLink to="/jobs" className="sidebar-link">
-          💼 Jobs
-        </NavLink>
-        <NavLink to="/upload" className="sidebar-link">
-          📤 Upload CV
-        </NavLink>
 
-        {user?.role === 'admin' && (
+        {user?.role === 'RECRUITER' && (
+          <NavLink to="/candidates" className="sidebar-link">
+            👥 Candidates
+          </NavLink>
+        )}
+
+        {user?.role === 'ADMIN' && (
+          <NavLink to="/jobs" className="sidebar-link">
+            💼 Jobs
+          </NavLink>
+        )}
+
+        {user?.role === 'RECRUITER' && (
+          <NavLink to="/upload" className="sidebar-link">
+            📤 Upload CV
+          </NavLink>
+        )}
+
+        {user?.role === 'ADMIN' && (
           <NavLink to="/users/create" className="sidebar-link">
             ➕ Create User
           </NavLink>
+          
         )}
-      </nav>
+        
+        {user?.role === 'ADMIN' && (
+          <NavLink to="/users" className="sidebar-link">
+            🧑‍💻 User List
+          </NavLink>
+         
+        )}
+       </nav>
     </aside>
   );
 };
