@@ -38,6 +38,7 @@ const CandidatesPage: React.FC = () => {
               <h3>{candidate.fullName}</h3>
               <p><strong>Email:</strong> {candidate.email}</p>
               <p><strong>Phone:</strong> {candidate.phone}</p>
+               <p><strong>Education:</strong> {candidate.education || 'N/A'}</p>
               <p><strong>Experience:</strong> {candidate.experience || 'N/A'}</p>
               <p><strong>Skills:</strong> {candidate.skills || 'N/A'}</p>
             </div>
