@@ -9,12 +9,10 @@ import {
   deleteJob,
 } from '../store/slices/jobSlice';
 import Spinner from '../components/Shared/Spinner';
-import { useNavigate } from 'react-router-dom';
 import './JobPage.css';
 
 const JobPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const jobs = useAppSelector(selectJobs);
   const loading = useAppSelector(selectJobsLoading);
@@ -24,9 +22,6 @@ const JobPage: React.FC = () => {
     dispatch(fetchJobs());
   }, [dispatch]);
 
-  const handleEdit = (id: string) => {
-    navigate(`/jobs/edit/${id}`);
-  };
 
   const handleDelete = (id: string) => {
     if (window.confirm('Are you sure you want to delete this job?')) {
