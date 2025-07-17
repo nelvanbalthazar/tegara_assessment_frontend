@@ -32,7 +32,10 @@ export const fetchJobs = createAsyncThunk<Job[]>(
   'jobs/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await api.get('/api/jobs');
+      const token = localStorage.getItem('token');
+      const res = await api.get('/api/jobs', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return res.data as Job[];
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to fetch jobs');
@@ -45,7 +48,10 @@ export const addJob = createAsyncThunk<Job, Partial<Job>>(
   'jobs/add',
   async (jobData, { rejectWithValue }) => {
     try {
-      const res = await api.post('/api/jobs', jobData);
+      const token = localStorage.getItem('token');
+      const res = await api.post('/api/jobs', jobData,  {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return res.data as Job;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to add job');
@@ -58,7 +64,10 @@ export const updateJob = createAsyncThunk<Job, { id: string; updates: Partial<Jo
   'jobs/update',
   async ({ id, updates }, { rejectWithValue }) => {
     try {
-      const res = await api.patch(`/api/jobs/${id}`, updates);
+      const token = localStorage.getItem('token');
+      const res = await api.patch(`/api/jobs/${id}`, updates, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return res.data as Job;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to update job');
@@ -71,7 +80,10 @@ export const deleteJob = createAsyncThunk<string, string>(
   'jobs/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/api/jobs/${id}`);
+      const token = localStorage.getItem('token');
+      await api.delete(`/api/jobs/${id}`,  {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return id;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to delete job');

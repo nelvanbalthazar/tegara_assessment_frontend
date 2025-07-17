@@ -27,6 +27,12 @@ const Sidebar: React.FC = () => {
           </NavLink>
         )}
 
+        {user?.role === 'ADMIN' && (
+          <NavLink to="/jobs/create" className="sidebar-link">
+            📝Create Job
+          </NavLink>
+        )}
+
         {user?.role === 'RECRUITER' && (
           <NavLink to="/upload" className="sidebar-link">
             📤 Upload CV
@@ -39,7 +45,7 @@ const Sidebar: React.FC = () => {
           </NavLink>
           
         )}
-        
+
         {user?.role === 'ADMIN' && (
           <NavLink to="/users" className="sidebar-link">
             🧑‍💻 User List

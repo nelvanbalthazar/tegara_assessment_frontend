@@ -6,12 +6,16 @@ import {
   selectJobs,
   selectJobsLoading,
   selectJobsError,
+  deleteJob,
 } from '../store/slices/jobSlice';
-import Spinner from '../components/Shared/Spinner'; // ✅ Import Spinner
+import Spinner from '../components/Shared/Spinner';
+import { useNavigate } from 'react-router-dom';
 import './JobPage.css';
 
 const JobPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const jobs = useAppSelector(selectJobs);
   const loading = useAppSelector(selectJobsLoading);
   const error = useAppSelector(selectJobsError);
@@ -20,13 +24,22 @@ const JobPage: React.FC = () => {
     dispatch(fetchJobs());
   }, [dispatch]);
 
+  const handleEdit = (id: string) => {
+    navigate(`/jobs/edit/${id}`);
+  };
+
+  const handleDelete = (id: string) => {
+    if (window.confirm('Are you sure you want to delete this job?')) {
+      dispatch(deleteJob(id));
+    }
+  };
+
   return (
     <MainLayout>
       <div className="job-page">
         <h1>Job Openings</h1>
 
-        {loading && <Spinner />} {/* Show spinner while loading */}
-
+        {loading && <Spinner />}
         {error && <p className="error">Error: {error}</p>}
 
         {!loading && !error && (
@@ -36,9 +49,11 @@ const JobPage: React.FC = () => {
                 <h3>{job.title}</h3>
                 <p>{job.description || 'No description provided.'}</p>
                 {job.location && <p><strong>Location:</strong> {job.location}</p>}
-                {job.experienceLevel && (
-                  <p><strong>Level:</strong> {job.experienceLevel}</p>
-                )}
+                {job.company && <p><strong>Company:</strong> {job.company}</p>}
+
+                <div className="job-actions">
+                  <button onClick={() => handleDelete(job.id)}>🗑️ Delete</button>
+                </div>
               </div>
             ))}
           </div>

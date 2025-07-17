@@ -1,0 +1,50 @@
+.create-job-wrapper {
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.create-job-form h2 {
+  margin-bottom: 1.5rem;
+  text-align: left;
+  color: #333;
+}
+
+.create-job-form label {
+  display: block;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.create-job-form input,
+.create-job-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.create-job-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.create-job-form button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.create-job-form button:hover {
+  background-color: #0056b3;
+}
