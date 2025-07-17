@@ -30,7 +30,7 @@ const UserListPage: React.FC = () => {
 
   return (
     <MainLayout>
-    <div className="user-list-container">
+    <div className="user-list-wrapper">
       <h2>User Management</h2>
       {loading && <p>Updating role...</p>}
       <table className="user-table">

@@ -20,6 +20,12 @@ const Sidebar: React.FC = () => {
             👥 Candidates
           </NavLink>
         )}
+        {user?.role === 'RECRUITER' && (
+          <NavLink to="/candidates/create" className="sidebar-link">
+          ➕ Add Candidate
+          </NavLink>
+        )}
+
 
         {user?.role === 'ADMIN' && (
           <NavLink to="/jobs" className="sidebar-link">

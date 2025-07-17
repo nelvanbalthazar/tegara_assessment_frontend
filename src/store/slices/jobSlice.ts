@@ -8,6 +8,7 @@ export interface Job {
   id: string;
   title: string;
   description?: string;
+  company?: string;
   location?: string;
   experienceLevel?: string;
   skillsRequired?: string[];

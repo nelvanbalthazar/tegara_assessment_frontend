@@ -32,7 +32,10 @@ export const fetchCVs = createAsyncThunk<CV[]>(
   'cv/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await api.get('/api/cv');
+      const token = localStorage.getItem('token');
+      const res = await api.get('/api/cv', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return res.data as CV[];
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to fetch CVs');
@@ -45,9 +48,11 @@ export const uploadCV = createAsyncThunk<CV, FormData>(
   'cv/upload',
   async (formData, { rejectWithValue }) => {
     try {
+      const token = localStorage.getItem('token');
       const res = await api.post('/api/cv/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+           Authorization: `Bearer ${token}`
         },
       });
       return res.data as CV;
@@ -62,7 +67,10 @@ export const deleteCV = createAsyncThunk<string, string>(
   'cv/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/api/cv/${id}`);
+      const token = localStorage.getItem('token');
+      await api.delete(`/api/cv/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return id;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to delete CV');

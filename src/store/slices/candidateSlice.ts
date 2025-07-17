@@ -6,11 +6,11 @@ import api from '../../api';
 // Candidate type
 export interface Candidate {
   id: string;
-  name: string;
+  fullName: string;
   email: string;
   phone?: string;
   location?: string;
-  skills?: string[];
+  skills?: string;
   experience?: string;
   education?: string;
 }
@@ -33,7 +33,10 @@ export const fetchCandidates = createAsyncThunk<Candidate[]>(
   'candidates/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await api.get('/api/candidates');
+      const token = localStorage.getItem('token');
+      const res = await api.get('/api/candidates',  {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return res.data as Candidate[];
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to fetch candidates');
@@ -46,7 +49,11 @@ export const addCandidate = createAsyncThunk<Candidate, Partial<Candidate>>(
   'candidates/add',
   async (candidate, { rejectWithValue }) => {
     try {
-      const res = await api.post('/api/candidates', candidate);
+      const token = localStorage.getItem('token');
+      console.log(candidate);
+      const res = await api.post('/api/candidates', candidate, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return res.data as Candidate;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to add candidate');
@@ -59,7 +66,10 @@ export const deleteCandidate = createAsyncThunk<string, string>(
   'candidates/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/api/candidates/${id}`);
+      const token = localStorage.getItem('token');
+      await api.delete(`/api/candidates/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return id;
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || 'Failed to delete candidate');
@@ -97,7 +107,7 @@ const candidateSlice = createSlice({
   },
 });
 
-// ✅ Selector
+// Selector
 export const selectCandidates = (state: RootState) => state.candidates.candidates;
 export const selectCandidatesLoading = (state: RootState) => state.candidates.loading;
 export const selectCandidatesError = (state: RootState) => state.candidates.error;
