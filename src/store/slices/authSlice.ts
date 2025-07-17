@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { RootState } from '../index'; // Adjust path if needed
+import type { RootState } from '../index';
 import api from '../../api';
 
 interface User {
@@ -14,6 +14,7 @@ interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
+  otpPendingEmail: string | null;
 }
 
 const initialState: AuthState = {
@@ -21,29 +22,43 @@ const initialState: AuthState = {
   user: null,
   loading: false,
   error: null,
+  otpPendingEmail: null,
 };
 
-// Login thunk
-export const login = createAsyncThunk<
-  { token: string; user?: User },
+
+// STEP 1 -Send email password and email otp
+export const initiateLogin = createAsyncThunk<
+  { email: string },
   { email: string; password: string },
   { rejectValue: string }
->('auth/login', async (credentials, { rejectWithValue }) => {
+>('auth/initiateLogin', async (credentials, { rejectWithValue }) => {
   try {
-    const response = await api.post<{ token: string; user?: User }>('/api/auth/login', credentials);
-    const { token, user } = response.data;
-    if (typeof token === 'string') {
-      localStorage.setItem('token', token);
-      return { token, user };
-    } else {
-      return rejectWithValue('Invalid login response');
-    }
+    await api.post('/api/auth/login', credentials); // trigger OTP generation & email
+    return { email: credentials.email };
   } catch (err: any) {
     return rejectWithValue(err.response?.data?.message || 'Login failed');
   }
 });
 
-// Create user thunk
+
+// STEP 2 - Verifikasi OTP → Get token
+export const verifyOtp = createAsyncThunk<
+  { token: string; user: User },
+  { email: string; otp: string },
+  { rejectValue: string }
+>('auth/verifyOtp', async ({ email, otp }, { rejectWithValue }) => {
+  try {
+    const res = await api.post('/api/auth/verify-otp', { email, otp });
+    const { token, user } = res.data;
+    localStorage.setItem('token', token);
+    return { token, user };
+  } catch (err: any) {
+    return rejectWithValue(err.response?.data?.message || 'OTP verification failed');
+  }
+});
+
+
+// Create new user (Admin only)
 export const createUser = createAsyncThunk<
   { message: string },
   { email: string; password: string; role: string },
@@ -51,19 +66,16 @@ export const createUser = createAsyncThunk<
 >('auth/createUser', async (userData, { rejectWithValue }) => {
   try {
     const token = localStorage.getItem('token');
-    const response = await api.post<{ message: string }>('/api/auth/register', userData,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    return response.data;
+    const res = await api.post<{ message: string }>('/api/auth/register', userData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
   } catch (err: any) {
-    return rejectWithValue(
-      err.response?.data?.message || 'Failed to create user'
-    );
+    return rejectWithValue(err.response?.data?.message || 'User creation failed');
   }
 });
 
+// Slice
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -71,31 +83,49 @@ const authSlice = createSlice({
     logout(state) {
       state.token = null;
       state.user = null;
+      state.otpPendingEmail = null;
       localStorage.removeItem('token');
     },
   },
   extraReducers: builder => {
-    // login
+
+    // STEP 1: initiate login
     builder
-      .addCase(login.pending, state => {
+      .addCase(initiateLogin.pending, state => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(initiateLogin.fulfilled, (state, action) => {
         state.loading = false;
-        state.token = action.payload.token;
-        localStorage.setItem('token', action.payload.token); 
-        state.user = action.payload.user ?? null;
-        state.error = null;
+        state.otpPendingEmail = action.payload.email;
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(initiateLogin.rejected, (state, action) => {
         state.loading = false;
-        state.token = null;
-        state.user = null;
         state.error = action.payload || 'Login failed';
       });
 
-    // create user
+  
+    // STEP 2: verify otp
+    builder
+      .addCase(verifyOtp.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyOtp.fulfilled, (state, action) => {
+        state.loading = false;
+        state.token = action.payload.token;
+        state.user = action.payload.user;
+        state.otpPendingEmail = null;
+      })
+      .addCase(verifyOtp.rejected, (state, action) => {
+        state.loading = false;
+        state.token = null;
+        state.user = null;
+        state.error = action.payload || 'OTP verification failed';
+      });
+
+    
+    // Create user
     builder
       .addCase(createUser.pending, state => {
         state.loading = true;
@@ -123,3 +153,4 @@ export const selectAuthToken = (state: RootState) => state.auth.token;
 export const selectAuthLoading = (state: RootState) => state.auth.loading;
 export const selectAuthError = (state: RootState) => state.auth.error;
 export const selectUser = (state: RootState) => state.auth.user;
+export const selectOtpPendingEmail = (state: RootState) => state.auth.otpPendingEmail;

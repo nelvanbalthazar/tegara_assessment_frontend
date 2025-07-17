@@ -21,3 +21,13 @@ form label {
   font-weight: 500;
   margin-bottom: 1rem;
 }
+
+form button {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.login-error {
+  color: red;
+  font-size: 0.9rem;
+}

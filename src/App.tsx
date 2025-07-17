@@ -9,6 +9,7 @@ import CreateUserPage from './pages/CreateUserPage';
 import UserListPage from './pages/UserListPage';
 import CreateJobPage from './pages/CreateJobPage';
 import CreateCandidatePage from './pages/CreateCandidatePage';
+import VerifyOtpPage from './pages/VerifyOtpPage';
 import './styles/App.css';
 
 import { useAppSelector } from './store/hooks';
@@ -20,11 +21,10 @@ const App: React.FC = () => {
 
   return (
     <Routes>
-      <Route
-        path="/login"
-        element={
-          isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
-        }
+      
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/verify-otp" element={ 
+        isAuthenticated ? <Navigate to="/dashboard" replace /> : <VerifyOtpPage />} 
       />
 
       {isAuthenticated ? (
