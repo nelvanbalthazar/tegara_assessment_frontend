@@ -1,38 +1,82 @@
-💻 Tech Stack
-Frontend: React, TypeScript, Redux, Vite
+# 🔍 Job Match Portal – Frontend
 
-Backend: Refer to the README.md in the backend repository for details.
+This is the frontend for the **Job Match Portal** web application.
 
-🔐 Authentication Flow
-Users must be seeded via data migration during backend service startup.
+## 📦 Tech Stack
 
-Upon logging in with a valid email and password, users are redirected to an OTP verification page.
+- **Frontend**: React, TypeScript, Redux, Vite  
+- **Backend**: See details in the [Backend Repository](#) `README.md`
 
-The OTP will be sent to the registered email address. Please ensure your email is active and valid.
+---
 
-After successful OTP verification, the user is redirected to the Dashboard.
+## 🔐 Authentication Flow
 
-Login as ADMIN <br />
-1 . Dashboard : Match scoring between candidate and job openings (filter score > 70 only and top 50 candidates with that higher score).
-2. Create User : Create User for login.
-3. User List : User created list we can change the roles there.
-4. Job : Menu for job openings we can delete the job also
-5. Create Job: We can create the job from this menu
+1. User login data is **seeded during backend service startup**.
+2. When logging in with a valid email and password, users are redirected to the **OTP verification page**.
+3. An OTP will be **sent to the registered email**.
+   > Ensure the email is **active and valid**.
+4. After successfully verifying the OTP, the user will be redirected to the **Dashboard page**.
 
-Login as RECRUITER <br />
-1. Dashboard : Match scoring between candidate and job openings (filter score > 70 only and top 50 candidates with that higher score. <br />
-2. Create Candidate : to create candidate input name, email, phone and location. <br />
-3. Candidate : we can see all candidate created <br />.
-4. Upload CV : we can upload CV by choosing per user This uplad will extract skill, education and experience then fill it to user details. <br />
+---
 
+## 👤 User Roles & Features
 
-step to run in local :
+### 🔑 Admin
 
-1. I'm using node version 22.15.0 make sure this is installed in your environment to avoid any problems in future. <br />
-2. run npm install <br />
-3. run npm run dev <br />
-4. run http://localhost: 5173 <br />
-   
+- **Dashboard**  
+  - Shows **match scoring** between candidates and job openings.  
+  - **Filters scores > 70 only**  
+  - Displays **top 50 matched candidates**.
 
+- **Create User**  
+  - Register new users for login access.
 
+- **User List**  
+  - Displays all registered users.  
+  - Allows **changing user roles**.
 
+- **Job**  
+  - View job openings.  
+  - **Delete job postings**.
+
+- **Create Job**  
+  - Add new job openings.
+
+---
+
+### 👥 Recruiter
+
+- **Dashboard**  
+  - Displays scoring between candidates and job openings.  
+  - Shows **top 50 candidates** with **scores > 70**.
+
+- **Create Candidate**  
+  - Add a candidate with name, email, phone, and location.
+
+- **Candidate List**  
+  - View all submitted candidates.
+
+- **Upload CV**  
+  - Upload a candidate’s CV.  
+  - Automatically extracts and fills:
+    - **Skills**
+    - **Education**
+    - **Experience**
+
+---
+
+## 🚀 How to Run Locally
+
+> Make sure you have **Node.js v22.15.0** installed to avoid compatibility issues.
+
+### 🔧 Setup Instructions
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Start the development server
+npm run dev
+
+# 3. Open the application in your browser
+http://localhost:5173
