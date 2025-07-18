@@ -1,4 +1,7 @@
-Tech Stack : React, Typescript, Redux, Vite
+💻 Tech Stack
+Frontend: React, TypeScript, Redux, Vite
+
+Backend: Refer to the README.md in the backend repository for details.
 
 Backend Stack will be explain in Backend Repository README.md
 
