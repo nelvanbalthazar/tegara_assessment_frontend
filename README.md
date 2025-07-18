@@ -5,7 +5,7 @@ This is the frontend for the **Job Match Portal** web application.
 ## 📦 Tech Stack
 
 - **Frontend**: React, TypeScript, Redux, Vite  
-- **Backend**: See details in the [Backend Repository](#) `README.md`
+- **Backend**: See details in the [Backend Repository](https://github.com/nelvanbalthazar/tegara_assessment_backend) `README.md`
 
 ---
 
