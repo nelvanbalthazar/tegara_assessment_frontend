@@ -3,12 +3,14 @@ Frontend: React, TypeScript, Redux, Vite
 
 Backend: Refer to the README.md in the backend repository for details.
 
-Backend Stack will be explain in Backend Repository README.md
+🔐 Authentication Flow
+Users must be seeded via data migration during backend service startup.
 
-User Login needed to be seeded from data migration durinig backend service start. <br />
-When Login with correct email and password it will be directed to otp verification page. <br />
-OTP will be sent to email registered. make sure email is active and valid. <br />
-When OTP verified successfully it will be redirected to Dashboard page. <br />
+Upon logging in with a valid email and password, users are redirected to an OTP verification page.
+
+The OTP will be sent to the registered email address. Please ensure your email is active and valid.
+
+After successful OTP verification, the user is redirected to the Dashboard.
 
 Login as ADMIN <br />
 1 . Dashboard : Match scoring between candidate and job openings (filter score > 70 only and top 50 candidates with that higher score).
