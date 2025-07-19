@@ -126,7 +126,7 @@ const cvSlice = createSlice({
   },
 });
 
-// --- Selectors ---
+// Selectors 
 export const selectCVs = (state: RootState) => state.cv.cvs;
 export const selectCVsLoading = (state: RootState) => state.cv.loading;
 export const selectCVsError = (state: RootState) => state.cv.error;

@@ -48,7 +48,7 @@ export const verifyOtp = createAsyncThunk<
   { rejectValue: string }
 >('auth/verifyOtp', async ({ email, otp }, { rejectWithValue }) => {
   try {
-    const res = await api.post('/api/auth/verify-otp', { email, otp });
+    const res = await api.post<{ token: string; user: User }>('/api/auth/verify-otp', { email, otp });
     const { token, user } = res.data;
     localStorage.setItem('token', token);
     return { token, user };
